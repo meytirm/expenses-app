@@ -1,10 +1,18 @@
 import {Text, View} from "react-native";
 
-function ExpensesSummary() {
+function ExpensesSummary({periodName, expenses}: Props) {
+  const expensesSum = expenses.reduce((accumulator, expense) => {
+    return accumulator + expense.amount
+  }, 0)
   return <View>
-    <Text>Last 7 Days</Text>
-    <Text>$177.95</Text>
+    <Text>{periodName}</Text>
+    <Text>${expensesSum.toFixed(2)}</Text>
   </View>
 }
 
 export default ExpensesSummary
+
+interface Props {
+  periodName: string
+  expenses: []
+}
