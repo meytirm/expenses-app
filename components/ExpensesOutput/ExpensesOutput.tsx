@@ -4,7 +4,7 @@ import ExpensesSummary from "./ExpensesSummary";
 
 function ExpensesOutput({expenses}: Props) {
   return <View>
-    <ExpensesSummary />
+    <ExpensesSummary periodName={periodName} expenses={expenses} />
     <ExpensesList expenses={expenses} />
   </View>
 }
