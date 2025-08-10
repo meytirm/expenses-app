@@ -1,8 +1,9 @@
-import {FlatList, SectionListRenderItemInfo, Text} from "react-native";
+import {FlatList} from "react-native";
 import {ExpenseInterface} from "../../types";
+import ExpenseItem from "./ExpenseItem";
 
 function renderExpenseItem(item: ExpenseInterface) {
-  return <Text>{item.description}</Text>
+  return <ExpenseItem expense={item} />
 }
 
 function ExpensesList({expenses}: Props) {
