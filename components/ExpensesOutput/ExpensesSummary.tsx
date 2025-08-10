@@ -1,4 +1,5 @@
 import {Text, View} from "react-native";
+import {ExpenseInterface} from "../../types";
 
 function ExpensesSummary({periodName, expenses}: Props) {
   const expensesSum = expenses.reduce((accumulator, expense) => {
@@ -14,5 +15,5 @@ export default ExpensesSummary
 
 interface Props {
   periodName: string
-  expenses: []
+  expenses: ExpenseInterface[]
 }
