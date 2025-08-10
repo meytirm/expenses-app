@@ -2,35 +2,34 @@ import {StatusBar} from 'expo-status-bar';
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import ManageExpenses from "./screens/ManageExpenses";
+import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import {GlobalStyles} from "./constants/styles";
 import {Ionicons} from "@expo/vector-icons"
 import IconButton from "./components/common/IconButton";
+import {RootStackParamList} from "./types";
 
-const Stack = createNativeStackNavigator()
-const BottomTabs = createBottomTabNavigator()
+const Stack = createNativeStackNavigator<RootStackParamList>()
+const BottomTabs = createBottomTabNavigator<RootStackParamList>()
 
 function ExpensesOverview() {
 
-  function handleOnPress() {
-
-  }
-
   return (
     <BottomTabs.Navigator
-      screenOptions={{
+      screenOptions={({navigation}) => ({
         headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
         headerTintColor: GlobalStyles.colors.white,
         tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({tintColor}) => {
           return (
-            <IconButton icon="add" onPress={handleOnPress} size={24} color={tintColor} />
+            <IconButton icon="add" onPress={() => {
+              navigation.navigate('ManageExpense', {})
+            }} size={24} color={tintColor} />
           )
         }
-      }}
+      })}
     >
       <BottomTabs.Screen
         name="RecentExpenses"
@@ -69,7 +68,7 @@ export default function App() {
               headerShown: false
             }}
           />
-          <Stack.Screen name="ManageExpenses" component={ManageExpenses}/>
+          <Stack.Screen name="ManageExpense" component={ManageExpense}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
