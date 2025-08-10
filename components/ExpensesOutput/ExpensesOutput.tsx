@@ -3,7 +3,7 @@ import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
 import {ExpenseInterface} from "../../types";
 
-function ExpensesOutput({expenses, periodName}: Props) {
+function ExpensesOutput({periodName}: Props) {
   const DUMMY_EXPENSES: ExpenseInterface[] = [
     {
       id: 'e1',
@@ -27,7 +27,7 @@ function ExpensesOutput({expenses, periodName}: Props) {
   return (
     <View>
       <ExpensesSummary periodName={periodName} expenses={DUMMY_EXPENSES}/>
-      <ExpensesList expenses={expenses}/>
+      <ExpensesList expenses={DUMMY_EXPENSES}/>
     </View>
   )
 }
@@ -35,6 +35,5 @@ function ExpensesOutput({expenses, periodName}: Props) {
 export default ExpensesOutput
 
 interface Props {
-  expenses: []
   periodName: string
 }
