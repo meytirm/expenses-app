@@ -23,7 +23,26 @@ function ExpensesOutput({periodName}: Props) {
       description: 'Some bananas',
       amount: 1.29,
       date: new Date('203-12-01')
-    }
+    },
+    {
+      id: 'e4',
+      description: 'Some bananas',
+      amount: 1.29,
+      date: new Date('203-12-01')
+    },
+    {
+      id: 'e5',
+      description: 'Some bananas',
+      amount: 1.29,
+      date: new Date('203-12-01')
+    },
+    {
+      id: 'e6',
+      description: 'Some bananas',
+      amount: 1.29,
+      date: new Date('203-12-01')
+    },
+
   ]
   return (
     <View style={styles.container}>
