@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
-import {ExpenseInterface} from "../../types";
+import {ExpenseInterface} from "../../types/";
 import {GlobalStyles} from "../../constants/styles";
 
 function ExpensesOutput({periodName}: Props) {
