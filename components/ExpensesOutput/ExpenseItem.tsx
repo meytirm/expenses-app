@@ -12,7 +12,9 @@ function ExpenseItem({expense}: Props) {
   const navigation = useNavigation<NavigationProp>()
 
   function expensePressHandler() {
-    navigation.navigate({name: 'ManageExpense', params: {}})
+    navigation.navigate({name: 'ManageExpense', params: {
+      expenseId: expense.id
+      }})
   }
 
   return (
