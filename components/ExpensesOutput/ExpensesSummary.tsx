@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from "react-native";
-import {ExpenseInterface} from "../../types";
+import {ExpenseInterface} from "../../types/";
 import {GlobalStyles} from "../../constants/styles";
 
 function ExpensesSummary({periodName, expenses}: Props) {
