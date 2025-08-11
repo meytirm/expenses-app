@@ -1,5 +1,5 @@
 export type RootStackParamList = {
-  ManageExpense: {}
+  ManageExpense: {expenseId?: string}
   RecentExpenses: {}
   AllExpenses: {}
   ExpensesOverview: {}
