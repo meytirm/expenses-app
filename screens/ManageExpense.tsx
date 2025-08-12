@@ -4,6 +4,8 @@ import {RootStackParamList} from "../types";
 import {useLayoutEffect} from "react";
 import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
+import UiButton from "../components/common/UiButton";
+
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
 function ManageExpense({navigation, route}: MealsOverviewProps) {
@@ -20,8 +22,29 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
 
   }
 
+  function cancelHandler() {
+
+  }
+
+  function confirmHandler() {
+
+  }
+
   return (
     <View style={styles.container}>
+      <View style={styles.buttons}>
+        <UiButton
+          style={styles.button}
+          mode="flat"
+          onPress={cancelHandler}>
+          Cancel
+        </UiButton>
+        <UiButton
+          style={styles.button}
+          onPress={confirmHandler}>
+          {isEditing ? 'Update' : 'Add'}
+        </UiButton>
+      </View>
       {
         isEditing && (
           <View style={styles.deleteContainer}>
@@ -43,6 +66,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
   deleteContainer: {
     marginTop: 16,
