@@ -19,15 +19,15 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }, [navigation, isEditing]);
 
   function handleDeleteExpense() {
-
+    navigation.goBack()
   }
 
   function cancelHandler() {
-
+    navigation.goBack()
   }
 
   function confirmHandler() {
-
+    navigation.goBack()
   }
 
   return (
