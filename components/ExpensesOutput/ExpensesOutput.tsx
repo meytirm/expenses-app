@@ -3,6 +3,7 @@ import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
 import {ExpenseInterface} from "../../types/expense";
 import {GlobalStyles} from "../../constants/styles";
+import DUMMY_EXPENSES from "../../constants/DUMMY_EXPENSES";
 
 function ExpensesOutput({periodName}: Props) {
   return (
