@@ -1,15 +1,14 @@
 import {StyleSheet, View} from "react-native";
 import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
-import {ExpenseInterface} from "../../types/expense";
 import {GlobalStyles} from "../../constants/styles";
-import DUMMY_EXPENSES from "../../constants/DUMMY_EXPENSES";
+import {ExpenseInterface} from "../../types/expense";
 
-function ExpensesOutput({periodName}: Props) {
+function ExpensesOutput({periodName, expenses}: Props) {
   return (
     <View style={styles.container}>
-      <ExpensesSummary periodName={periodName} expenses={DUMMY_EXPENSES}/>
-      <ExpensesList expenses={DUMMY_EXPENSES}/>
+      <ExpensesSummary periodName={periodName} expenses={expenses}/>
+      <ExpensesList expenses={expenses}/>
     </View>
   )
 }
@@ -25,5 +24,6 @@ const styles = StyleSheet.create({
 })
 
 interface Props {
-  periodName: string
+  periodName: string,
+  expenses: ExpenseInterface[]
 }
