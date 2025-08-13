@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet, Text, View} from "react-native";
-import {ExpenseInterface} from "../../types/";
+import {ExpenseInterface} from "../../types/expense";
 import {GlobalStyles} from "../../constants/styles";
 import {getFormattedDate} from "../../utils/date";
 import {useNavigation} from "@react-navigation/native";
