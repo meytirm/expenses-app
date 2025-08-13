@@ -1,5 +1,5 @@
 import {FlatList} from "react-native";
-import {ExpenseInterface} from "../../types/";
+import {ExpenseInterface} from "../../types/expense";
 import ExpenseItem from "./ExpenseItem";
 
 function renderExpenseItem(item: ExpenseInterface) {
