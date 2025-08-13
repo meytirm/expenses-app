@@ -3,23 +3,23 @@ import {ActionType} from "../../types/context-api";
 
 export default function expensesReducer(state: ExpenseInterface[], action: ActionType) {
   switch (action.type) {
-    case 'ADDED':
+    case 'ADDED': {
       const id = new Date().toString() + Math.random().toString()
       return [...state, {...action.payload, id}]
-    case 'DELETED':
+    }
+    case 'DELETED': {
       return state.filter((expense) => expense.id !== action.payload)
-    case 'UPDATED':
-      const expenseIndex = state.findIndex(item => item.id === action.payload.id)
-      if (expenseIndex === -1) {
-        return state
-      }
-      const updatableExpense = state[expenseIndex]
-      const updatedItem = {...updatableExpense, ...action.payload}
-      const updatedExpenses = [...state]
-      updatedExpenses[expenseIndex] = updatedItem
-      return updatedExpenses
-
-    default:
+    }
+    case 'UPDATED': {
+      return state.map((expense) => {
+        if (expense.id === action.payload.id) {
+          return action.payload
+        }
+        return expense
+      })
+    }
+    default: {
       return state
+    }
   }
 }
