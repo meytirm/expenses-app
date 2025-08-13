@@ -17,25 +17,31 @@ const DUMMY_EXPENSES: ExpenseInterface[] = [
     id: 'e3',
     description: 'Some bananas',
     amount: 1.29,
-    date: new Date('203-12-01')
+    date: new Date('2023-12-01')
   },
   {
     id: 'e4',
     description: 'Some bananas',
     amount: 1.29,
-    date: new Date('203-12-01')
+    date: new Date('2023-12-01')
   },
   {
     id: 'e5',
     description: 'Some bananas',
     amount: 1.29,
-    date: new Date('203-12-01')
+    date: new Date('2023-12-01')
   },
   {
     id: 'e6',
     description: 'Some bananas',
     amount: 1.29,
-    date: new Date('203-12-01')
+    date: new Date('2023-12-01')
+  },
+  {
+    id: 'e7',
+    description: 'Some bananas',
+    amount: 1.29,
+    date: new Date('2025-08-13')
   },
 ]
 
