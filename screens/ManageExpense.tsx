@@ -1,14 +1,16 @@
 import {StyleSheet, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../types";
-import {useLayoutEffect} from "react";
+import {useContext, useLayoutEffect} from "react";
 import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import UiButton from "../components/common/UiButton";
+import {ExpensesContext} from "../store/expenses/expenses-context";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
 function ManageExpense({navigation, route}: MealsOverviewProps) {
+  const expenseContext = useContext(ExpensesContext)
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
 
@@ -19,6 +21,9 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }, [navigation, isEditing]);
 
   function handleDeleteExpense() {
+    if (expenseContext && editedExpenseId) {
+      expenseContext.deleteExpense(editedExpenseId)
+    }
     navigation.goBack()
   }
 
@@ -27,6 +32,25 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }
 
   function confirmHandler() {
+    if (isEditing) {
+      if (expenseContext && editedExpenseId) {
+          expenseContext.updateExpense({
+            id: editedExpenseId,
+            description: 'edited',
+            amount: 99,
+            date: new Date()
+          })
+      } else {
+      }
+    } else {
+      if (expenseContext) {
+        expenseContext.addExpense({
+          description: 'it is a test',
+          amount: 0,
+          date: new Date()
+        })
+      }
+    }
     navigation.goBack()
   }
 
