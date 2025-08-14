@@ -6,6 +6,7 @@ import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import UiButton from "../components/common/UiButton";
 import {ExpensesContext} from "../store/expenses/expenses-context";
+import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
@@ -56,6 +57,7 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <UiButton
           style={styles.button}
