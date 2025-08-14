@@ -1,4 +1,3 @@
-import {Text} from "react-native";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import {useContext} from "react";
 import {ExpensesContext} from "../store/expenses/expenses-context";
