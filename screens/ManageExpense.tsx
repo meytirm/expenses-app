@@ -6,6 +6,7 @@ import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import {ExpensesContext} from "../store/expenses/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import {ExpenseInputFormValues} from "../types/expense";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
@@ -13,6 +14,9 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   const expenseContext = useContext(ExpensesContext)
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
+
+  const selectedExpense = expenseContext?.expenses
+    .find((expense => expense.id === editedExpenseId))
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,25 +35,15 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
     navigation.goBack()
   }
 
-  function confirmHandler() {
+  function handleOnSubmit(expenseData: ExpenseInputFormValues) {
+    if (!expenseContext) return;
     if (isEditing) {
-      if (expenseContext && editedExpenseId) {
-          expenseContext.updateExpense({
-            id: editedExpenseId,
-            description: 'edited',
-            amount: 99,
-            date: new Date()
-          })
-      } else {
-      }
+      expenseContext.updateExpense({
+        id: editedExpenseId,
+        ...expenseData
+      })
     } else {
-      if (expenseContext) {
-        expenseContext.addExpense({
-          description: 'it is a test',
-          amount: 0,
-          date: new Date()
-        })
-      }
+      expenseContext.addExpense(expenseData)
     }
     navigation.goBack()
   }
@@ -58,7 +52,9 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
     <View style={styles.container}>
       <ExpenseForm
         submitButtonLabel={isEditing ? 'Update' : 'Add'}
+        defaultValues={selectedExpense}
         onCancel={handleOnCancel}
+        onSubmit={handleOnSubmit}
       />
       {
         isEditing && (
