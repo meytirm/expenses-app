@@ -1,4 +1,4 @@
-import {View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import UiInput from "../common/UiInput";
 
 function ExpenseForm() {
@@ -8,29 +8,34 @@ function ExpenseForm() {
   }
 
   return (
-    <View>
+    <View style={styles.form}>
+      <Text style={styles.title}>Your Expense</Text>
+      <View style={styles.inputsRow}>
+        <UiInput
+          style={styles.rowInput}
+          label="Amount"
+          textInputConfig={{
+            value: '',
+            onChangeText: changeAmountHandler,
+            keyboardType: 'decimal-pad'
+          }}
+        />
+        <UiInput
+          style={styles.rowInput}
+          label="Date"
+          textInputConfig={{
+            value: '',
+            placeholder: "YYYY-MM-DD",
+            maxLength: 10,
+            onChangeText: () => {
+            }
+          }}
+        />
+      </View>
       <UiInput
-        textInputConfig={{
-          label: "Amount",
-          value: '',
-          onChangeText: changeAmountHandler,
-          keyboardType: 'decimal-pad'
-        }}
-      />
-      <UiInput
-        textInputConfig={{
-          value: '',
-          label: "Date",
-          placeholder: "YYYY-MM-DD",
-          maxLength: 10,
-          onChangeText: () => {
-          }
-        }}
-      />
-      <UiInput
+        label="Description"
         textInputConfig={{
           multiline: true,
-          label: "Description",
           value: "",
           onChangeText: () => {
           },
@@ -39,5 +44,23 @@ function ExpenseForm() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  form: {
+    marginTop: 60,
+  },
+  inputsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  rowInput: {
+    flex: 1
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  }
+})
 
 export default ExpenseForm
