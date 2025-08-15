@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import UiInput from "../common/UiInput";
 import {useState} from "react";
 import UiButton from "../common/UiButton";
