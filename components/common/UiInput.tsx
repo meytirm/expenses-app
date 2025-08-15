@@ -1,8 +1,7 @@
 import {StyleSheet, Text, TextInput, TextInputProps, View} from "react-native";
 import {GlobalStyles} from "../../constants/styles";
 
-function UiInput({textInputConfig}: Props) {
-
+function UiInput({textInputConfig, label, style}: Props) {
   const inputStyles: object[] = [styles.input]
 
   if (textInputConfig && textInputConfig.multiline) {
@@ -10,8 +9,8 @@ function UiInput({textInputConfig}: Props) {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>{textInputConfig?.label}</Text>
+    <View style={[styles.inputContainer, style]}>
+      <Text style={styles.label}>{label}</Text>
       <TextInput
         style={inputStyles}
         {...textInputConfig}
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
 export default UiInput
 
 interface Props {
-  textInputConfig?: TextInputProps & {
-    label: string
-  }
+  textInputConfig?: TextInputProps
+  label?: string
+  style?: object
 }
