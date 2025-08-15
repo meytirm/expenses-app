@@ -4,7 +4,6 @@ import {RootStackParamList} from "../types";
 import {useContext, useLayoutEffect} from "react";
 import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
-import UiButton from "../components/common/UiButton";
 import {ExpensesContext} from "../store/expenses/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
@@ -28,7 +27,7 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
     navigation.goBack()
   }
 
-  function cancelHandler() {
+  function handleOnCancel() {
     navigation.goBack()
   }
 
@@ -57,20 +56,10 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttons}>
-        <UiButton
-          style={styles.button}
-          mode="flat"
-          onPress={cancelHandler}>
-          Cancel
-        </UiButton>
-        <UiButton
-          style={styles.button}
-          onPress={confirmHandler}>
-          {isEditing ? 'Update' : 'Add'}
-        </UiButton>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditing ? 'Update' : 'Add'}
+        onCancel={handleOnCancel}
+      />
       {
         isEditing && (
           <View style={styles.deleteContainer}>
@@ -92,15 +81,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
   deleteContainer: {
     marginTop: 16,
