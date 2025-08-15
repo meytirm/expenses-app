@@ -4,6 +4,7 @@ import {useState} from "react";
 import UiButton from "../common/UiButton";
 import {ExpenseInputFormValues, ExpenseInterface} from "../../types/expense";
 import {getFormattedDate} from "../../utils/date";
+import {GlobalStyles} from "../../constants/styles";
 
 function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Props) {
   const [inputs, setInputs] = useState({
@@ -72,6 +73,7 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
         <UiInput
           style={styles.rowInput}
           label="Amount"
+          inValid={!inputs.amount.isValid}
           textInputConfig={{
             value: inputs.amount.value,
             onChangeText: (value) => inputChangedHandler('amount', value),
@@ -81,6 +83,7 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
         <UiInput
           style={styles.rowInput}
           label="Date"
+          inValid={!inputs.date.isValid}
           textInputConfig={{
             value: inputs.date.value,
             placeholder: "YYYY-MM-DD",
@@ -91,6 +94,7 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
       </View>
       <UiInput
         label="Description"
+        inValid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           value: inputs.description.value,
@@ -99,7 +103,7 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
       />
       {
         formIsInvalid &&
-          <Text> Invalid input values - please check your entered data </Text>
+          <Text style={styles.errorText}> Invalid input values - please check your entered data </Text>
       }
       <View style={styles.buttons}>
         <UiButton
@@ -143,6 +147,11 @@ const styles = StyleSheet.create({
     minWidth: 120,
     marginHorizontal: 8,
   },
+  errorText: {
+    textAlign: 'center',
+    color: GlobalStyles.colors.error500,
+    margin: 8
+  }
 })
 
 export default ExpenseForm
