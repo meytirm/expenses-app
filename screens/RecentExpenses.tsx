@@ -1,11 +1,20 @@
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {ExpensesContext} from "../store/expenses/expenses-context";
 import {getDateMinusDays} from "../utils/date";
+import LoadingOverlay from "../components/common/LoadingOverlay";
+import {ExpenseInterface} from "../types/expense";
+import {findAllExpenses} from "../service/expense";
+import ErrorOverlay from "../components/common/ErrorOverlay";
 
 function RecentExpenses() {
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
   const expensesContext = useContext(ExpensesContext)
-  const expenses = expensesContext ? expensesContext.expenses : []
+  if (!expensesContext) {
+    throw new Error('ExpensesContext is not provided')
+  }
+  const {expenses, readExpense} = expensesContext
   const recentExpenses = expenses
     .filter((expense) => {
       const today = new Date()
@@ -13,6 +22,41 @@ function RecentExpenses() {
 
       return expense.date > dateSevenDaysAgo
     })
+
+  useEffect(() => {
+    async function fetchExpenses() {
+      setLoading(true)
+      try {
+        const expensesMapped: ExpenseInterface[] = []
+        const response = await findAllExpenses()
+        Object.keys(response.data).forEach(key => {
+          const expense: ExpenseInterface = {
+            id: key,
+            date: new Date(response.data[key].date),
+            description: response.data[key].description,
+            amount: response.data[key].amount,
+          }
+          expensesMapped.push(expense)
+
+          readExpense(expensesMapped)
+        })
+      } catch (e) {
+        setError('Could not fetch expenses!')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchExpenses()
+  }, []);
+
+  if (error) {
+    return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
+  }
+
+  if (loading) {
+    return <LoadingOverlay />
+  }
   return <ExpensesOutput
     expenses={recentExpenses}
     periodName="Last 7 Days"

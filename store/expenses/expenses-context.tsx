@@ -2,14 +2,17 @@ import {createContext, ReactNode, useReducer} from "react";
 import {ExpenseInterface} from "../../types/expense";
 import {ExpenseContextInterface} from "../../types/context-api";
 import expensesReducer from "./expenses-reducer";
-import DUMMY_EXPENSES from "../../constants/DUMMY_EXPENSES";
 
 export const ExpensesContext = createContext<ExpenseContextInterface | null>(null)
 
 function ExpensesContextProvider({children}: Props) {
-  const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES)
+  const [expensesState, dispatch] = useReducer(expensesReducer, [])
 
-  function addExpense(expense: Omit<ExpenseInterface, 'id'>) {
+  function readExpense(expenses: ExpenseInterface[]) {
+    dispatch({type: 'READ', payload: expenses})
+  }
+
+  function addExpense(expense: ExpenseInterface) {
     dispatch({type: 'ADDED', payload: expense})
   }
 
@@ -26,7 +29,8 @@ function ExpensesContextProvider({children}: Props) {
       expenses: expensesState,
       addExpense,
       deleteExpense,
-      updateExpense
+      updateExpense,
+      readExpense
     }}>
       {children}
     </ExpensesContext.Provider>

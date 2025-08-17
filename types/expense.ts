@@ -10,3 +10,11 @@ export interface ExpenseInputFormValues {
   amount: number;
   date: Date;
 }
+
+export interface ExpenseCreateResponse {
+  name: string
+}
+
+export interface ExpensesFindAllResponse {
+    [id: string]: Omit<ExpenseInterface, 'id'>
+}
