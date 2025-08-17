@@ -5,7 +5,7 @@ export interface ExpenseContextInterface {
   addExpense: (expense: ExpenseInterface) => void
   deleteExpense: (expenseId: string) => void
   updateExpense: (expense: ExpenseInterface) => void
-  loading: boolean
+  readExpense: (expenses: ExpenseInterface[]) => void
 }
 
 export type ActionType =
