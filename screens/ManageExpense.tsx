@@ -1,22 +1,27 @@
 import {StyleSheet, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../types";
-import {useContext, useLayoutEffect} from "react";
+import {useContext, useLayoutEffect, useState} from "react";
 import IconButton from "../components/common/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import {ExpensesContext} from "../store/expenses/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import {ExpenseInputFormValues} from "../types/expense";
 import {createExpense, deleteExpense, updateExpense} from "../service/expense";
+import LoadingOverlay from "../components/common/LoadingOverlay";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
 function ManageExpense({navigation, route}: MealsOverviewProps) {
+  const [loading, setLoading] = useState(false)
   const expenseContext = useContext(ExpensesContext)
+  if (!expenseContext) {
+    throw new Error('ExpensesContext is not provided')
+  }
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
 
-  const selectedExpense = expenseContext?.expenses
+  const selectedExpense = expenseContext.expenses
     .find((expense => expense.id === editedExpenseId))
 
   useLayoutEffect(() => {
@@ -26,12 +31,15 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }, [navigation, isEditing]);
 
   async function handleDeleteExpense() {
+    setLoading(true)
     if (expenseContext && editedExpenseId) {
       try {
         await deleteExpense(editedExpenseId)
         expenseContext.deleteExpense(editedExpenseId)
       } catch (e) {
         console.log(e)
+      } finally {
+        setLoading(false)
       }
     }
     navigation.goBack()
@@ -42,7 +50,7 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }
 
   async function handleOnSubmit(expenseData: ExpenseInputFormValues) {
-    if (!expenseContext) return;
+    setLoading(true)
     if (isEditing) {
       try {
         await updateExpense(editedExpenseId, expenseData)
@@ -52,6 +60,8 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
         })
       } catch (e) {
         console.log(e)
+      } finally {
+        setLoading(false)
       }
     } else {
       try {
@@ -60,9 +70,15 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
         expenseContext.addExpense({...expenseData, id})
       } catch (e) {
         console.log(e)
+      } finally {
+        setLoading(false)
       }
     }
     navigation.goBack()
+  }
+
+  if (loading) {
+    return <LoadingOverlay />
   }
 
   return (
