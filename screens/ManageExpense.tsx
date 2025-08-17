@@ -7,7 +7,7 @@ import {GlobalStyles} from "../constants/styles";
 import {ExpensesContext} from "../store/expenses/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import {ExpenseInputFormValues} from "../types/expense";
-import {createExpense} from "../service/expense";
+import {createExpense, deleteExpense, updateExpense} from "../service/expense";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, 'ManageExpense'>;
 
@@ -25,9 +25,14 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
     })
   }, [navigation, isEditing]);
 
-  function handleDeleteExpense() {
+  async function handleDeleteExpense() {
     if (expenseContext && editedExpenseId) {
-      expenseContext.deleteExpense(editedExpenseId)
+      try {
+        await deleteExpense(editedExpenseId)
+        expenseContext.deleteExpense(editedExpenseId)
+      } catch (e) {
+        console.log(e)
+      }
     }
     navigation.goBack()
   }
@@ -39,10 +44,15 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   async function handleOnSubmit(expenseData: ExpenseInputFormValues) {
     if (!expenseContext) return;
     if (isEditing) {
-      expenseContext.updateExpense({
-        id: editedExpenseId,
-        ...expenseData
-      })
+      try {
+        await updateExpense(editedExpenseId, expenseData)
+        expenseContext.updateExpense({
+          id: editedExpenseId,
+          ...expenseData
+        })
+      } catch (e) {
+        console.log(e)
+      }
     } else {
       try {
         const response = await createExpense(expenseData)
