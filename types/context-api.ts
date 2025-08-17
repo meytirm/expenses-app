@@ -2,12 +2,13 @@ import {ExpenseInterface} from "./expense";
 
 export interface ExpenseContextInterface {
   expenses: ExpenseInterface[],
-  addExpense: (expense: Omit<ExpenseInterface, 'id'>) => void
+  addExpense: (expense: ExpenseInterface) => void
   deleteExpense: (expenseId: string) => void
   updateExpense: (expense: ExpenseInterface) => void
 }
 
 export type ActionType =
-  { type: 'ADDED', payload: Omit<ExpenseInterface, 'id'> } |
+  { type: 'ADDED', payload: ExpenseInterface } |
   { type: 'DELETED', payload: string } |
-  { type: 'UPDATED', payload: ExpenseInterface }
+  { type: 'UPDATED', payload: ExpenseInterface } |
+  { type: 'READ', payload: ExpenseInterface[] }

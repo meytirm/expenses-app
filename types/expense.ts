@@ -10,3 +10,7 @@ export interface ExpenseInputFormValues {
   amount: number;
   date: Date;
 }
+
+export interface ExpenseCreateResponse {
+  name: string
+}
