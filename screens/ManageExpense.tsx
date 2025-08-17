@@ -36,7 +36,7 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
     navigation.goBack()
   }
 
-  function handleOnSubmit(expenseData: ExpenseInputFormValues) {
+  async function handleOnSubmit(expenseData: ExpenseInputFormValues) {
     if (!expenseContext) return;
     if (isEditing) {
       expenseContext.updateExpense({
@@ -44,7 +44,11 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
         ...expenseData
       })
     } else {
-      createExpense(expenseData)
+      try {
+        await createExpense(expenseData)
+      } catch (e) {
+        console.log(e)
+      }
       expenseContext.addExpense(expenseData)
     }
     navigation.goBack()
