@@ -45,11 +45,12 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
       })
     } else {
       try {
-        await createExpense(expenseData)
+        const response = await createExpense(expenseData)
+        const id = response.data.name
+        expenseContext.addExpense({...expenseData, id})
       } catch (e) {
         console.log(e)
       }
-      expenseContext.addExpense(expenseData)
     }
     navigation.goBack()
   }
