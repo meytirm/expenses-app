@@ -5,8 +5,10 @@ import {getDateMinusDays} from "../utils/date";
 import LoadingOverlay from "../components/common/LoadingOverlay";
 import {ExpenseInterface} from "../types/expense";
 import {findAllExpenses} from "../service/expense";
+import ErrorOverlay from "../components/common/ErrorOverlay";
 
 function RecentExpenses() {
+  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const expensesContext = useContext(ExpensesContext)
   if (!expensesContext) {
@@ -39,7 +41,7 @@ function RecentExpenses() {
           readExpense(expensesMapped)
         })
       } catch (e) {
-        console.log(e)
+        setError('Could not fetch expenses!')
       } finally {
         setLoading(false)
       }
@@ -47,6 +49,10 @@ function RecentExpenses() {
 
     fetchExpenses()
   }, []);
+
+  if (error) {
+    return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
+  }
 
   if (loading) {
     return <LoadingOverlay />
