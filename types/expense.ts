@@ -14,3 +14,7 @@ export interface ExpenseInputFormValues {
 export interface ExpenseCreateResponse {
   name: string
 }
+
+export interface ExpensesFindAllResponse {
+    [id: string]: Omit<ExpenseInterface, 'id'>
+}
