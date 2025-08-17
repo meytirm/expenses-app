@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig} from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://expense-app-bc386-default-rtdb.firebaseio.com',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
