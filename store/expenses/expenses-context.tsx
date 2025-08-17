@@ -8,6 +8,10 @@ export const ExpensesContext = createContext<ExpenseContextInterface | null>(nul
 function ExpensesContextProvider({children}: Props) {
   const [expensesState, dispatch] = useReducer(expensesReducer, [])
 
+  function readExpense(expenses: ExpenseInterface[]) {
+    dispatch({type: 'READ', payload: expenses})
+  }
+
   function addExpense(expense: ExpenseInterface) {
     dispatch({type: 'ADDED', payload: expense})
   }
