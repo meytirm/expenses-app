@@ -4,7 +4,7 @@ A **React Native** application built with **TypeScript** and **Expo** for managi
 
 ## 📽️ Demo
 
-![App Demo](./assets/screen-record.gif)
+<img src="./assets/screen-record.gif" alt="App Demo" width="300"/>
 
 ## 🚀 Features
 
