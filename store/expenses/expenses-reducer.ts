@@ -8,8 +8,7 @@ export default function expensesReducer(state: ExpenseInterface[], action: Actio
       return inverted
     }
     case 'ADDED': {
-      const id = new Date().toString() + Math.random().toString()
-      return [...state, {...action.payload, id}]
+      return [...state, action.payload]
     }
     case 'DELETED': {
       return state.filter((expense) => expense.id !== action.payload)
