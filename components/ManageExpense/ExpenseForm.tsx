@@ -5,8 +5,10 @@ import UiButton from "../common/UiButton";
 import {ExpenseInputFormValues, ExpenseInterface} from "../../types/expense";
 import {getFormattedDate} from "../../utils/date";
 import {GlobalStyles} from "../../constants/styles";
+import DateTimePicker, {DateTimePickerAndroid, DateTimePickerEvent} from '@react-native-community/datetimepicker';
 
 function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Props) {
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [inputs, setInputs] = useState({
     amount: {
       value: defaultValues ? defaultValues.amount.toString() : '',
@@ -66,6 +68,15 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
     !inputs.date.isValid ||
     !inputs.description.isValid
 
+  function onChangeDateTimePicker(event: DateTimePickerEvent, selectedDate: Date | undefined) {
+    const currentDate = selectedDate;
+    if (currentDate && event.type === 'set') {
+      inputChangedHandler('date', getFormattedDate(currentDate))
+    }
+    setShowDatePicker(false);
+  }
+
+
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
@@ -80,17 +91,19 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
             keyboardType: 'decimal-pad'
           }}
         />
-        <UiInput
-          style={styles.rowInput}
-          label="Date"
-          inValid={!inputs.date.isValid}
-          textInputConfig={{
-            value: inputs.date.value,
-            placeholder: "YYYY-MM-DD",
-            maxLength: 10,
-            onChangeText: (value) => inputChangedHandler('date', value),
-          }}
-        />
+        <View onTouchStart={() => setShowDatePicker(true)}>
+          <UiInput
+            style={styles.rowInput}
+            label="Date"
+            inValid={!inputs.date.isValid}
+            textInputConfig={{
+              value: inputs.date.value,
+              placeholder: "YYYY-MM-DD",
+              maxLength: 10,
+              readOnly: true,
+            }}
+          />
+        </View>
       </View>
       <UiInput
         label="Description"
@@ -118,6 +131,15 @@ function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Pro
           {submitButtonLabel}
         </UiButton>
       </View>
+      {showDatePicker && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={new Date()}
+          mode="date"
+          is24Hour={false}
+          onChange={onChangeDateTimePicker}
+        />
+      )}
     </View>
   )
 }
