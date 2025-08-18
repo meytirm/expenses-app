@@ -53,14 +53,10 @@ function ManageExpense({navigation, route}: MealsOverviewProps) {
   }
 
   if (loading || submitLoading) {
-    console.log('loading', loading)
-    console.log('submitLoading', submitLoading)
     return <LoadingOverlay />
   }
 
   if (error || submitError) {
-    console.log('error', error)
-    console.log('submitError', submitError)
     return <ErrorOverlay message={error ? error : submitError} onConfirm={() => {
       setError(null)
       setSubmitError(null)
