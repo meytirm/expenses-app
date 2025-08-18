@@ -5,7 +5,8 @@ import UiButton from "../common/UiButton";
 import {ExpenseInputFormValues, ExpenseInterface} from "../../types/expense";
 import {getFormattedDate} from "../../utils/date";
 import {GlobalStyles} from "../../constants/styles";
-import DateTimePicker, {DateTimePickerAndroid, DateTimePickerEvent} from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import type {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 
 function ExpenseForm({onCancel, submitButtonLabel, onSubmit, defaultValues}: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
